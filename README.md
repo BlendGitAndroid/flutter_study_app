@@ -1,6 +1,6 @@
 # flutter_study_app
 
-Flutter 学习记录
+Flutter 学习记录 开始学习
 
 A new Flutter application.
 
