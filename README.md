@@ -1,5 +1,7 @@
 # flutter_study_app
 
+Flutter 学习记录
+
 A new Flutter application.
 
 ## Getting Started
