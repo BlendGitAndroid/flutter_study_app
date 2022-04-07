@@ -21,7 +21,7 @@ main(List<String> args) {
   print('every type = $anyType');
 
   ///使用强类型定义变量，类型确定之后，变量类型就不可变了
-  String userName = 'zero';
+  String userName = 'Blend';
   int age = 20;
   double saleryPrice = 12.3;
   num weight = 1200;

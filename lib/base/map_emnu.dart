@@ -2,14 +2,14 @@ import 'dart:convert';
 
 ///map
 main() {
-  var map1 = <String, dynamic>{'name': 'zeno', 'age': 20, 'weight': 120};
+  var map1 = <String, dynamic>{'name': 'blend', 'age': 20, 'weight': 120};
   print(map1);
 
-  //转换成json
+  ///转换成json
   var jsonStr = jsonEncode(map1);
   print(jsonStr);
 
-  //遍历
+  ///遍历
   map1['address'] = 'hu nan chang sha';
   map1.forEach((key, val) => print("$key : $val"));
 }
