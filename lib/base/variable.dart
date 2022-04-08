@@ -1,9 +1,20 @@
-///Dart变量
-///Dart语言常用数据类型，int、double、num、String、dynamic、Object
-///变量的默认值都是null，包括boolean类型
+///Dart变量，三斜杠文档注释
+
+///var:如果没有初始值，可以变成任何类型
+///dynamic:动态任意类型，编译阶段不检查类型
+///Object:动态任意类型，编译阶段检查检查类型
+///区别：
+///唯一区别 var 如果有初始值，类型被锁定
+
+///变量的默认值都是null，包括boolean类型，一切都是对象
+
+///final和const
+///1.被final或者const修饰的变量，变量类型可以省略
+///2.被 final 或 const 修饰的变量无法再去修改其值。
+///3.final或const不能和var同时使用。
 
 main(List<String> args) {
-  ///变量定义
+  ///变量定义，进行类型推断为String，之后不能进行更改
   var str1 = 'are you ok ?';
   print(str1);
 
@@ -28,12 +39,15 @@ main(List<String> args) {
   print(
       'name = $userName and age = $age,price = $saleryPrice,and weight = $weight');
 
-  ///任意类型变量声明
+  ///任意类型变量声明，注意dynamic和Object的区别
   dynamic anything = 12;
   anything = 'good job';
+  anything.test(); //编译时不会检查类型，这就是和Object的区别
+
   Object anythingObj = 'this is object type';
   anythingObj = 12;
   print('dynamic type $anything and anythingObj = $anythingObj');
+  // anythingObj.test();    编译不过，会检查类型
 
   ///字符变量
   String strDefine1 =
@@ -78,4 +92,67 @@ main(List<String> args) {
   /// 使用const 定义的变量，如果在内存中已经存在， 则会复用
   const ls2 = [1, 2, 3, 4, 5, 6];
   print(identical(ls1, ls2)); // true ls1 和 ls2 是相同对象
+
+  /// ---------------------------------final和const--------------------------------
+  //1.  被final或者const修饰的变量，变量类型可以省略
+  final fVariable1 = 'dongnao';
+//  final String fVariable1 = 'dongnao';
+  const cVariable1 = 'dongnao';
+//  const String cVariable1 = 'dongnao';
+
+  //2.  被 final 或 const 修饰的变量无法再去修改其值。
+//   fVariable1 = 'damon';
+//   cVariable1 = 'damon';
+
+  //3.  final或const不能和var同时使用。
+//  final var fVariable1 = 'dongnao';
+//  const var fVariable1 = 'dongnao';
+
+  //4.  如果是类级别常量，使用static const
+  DateTime; //可参照DateTime static const int monday = 1;
+
+  //5.  const可以使用其他 const常量的值来初始化其值
+  const width = 100;
+  const height = 100;
+  const square = width * height;
+
+  //6.  const赋值 申明可省略
+  const List clist = [1, 2, 3];
+//  const List clist = const [1, 2, 3];//dart 2之前，const赋值必须用const声明
+
+  //7.  可以更改非final,非const变量的值，即使它曾经具有const值
+  var varList = const [1, 2, 3];
+  final finalList = const [1, 2, 3];
+  const constList = [1, 2, 3];
+  varList = [1];
+//  constList = [1];
+//  finalList = [1];
+
+  //8.  const导致的不可变性是可传递的
+  final List nls = [1, 2, 3];
+  nls[1] = 4;
+  print(nls);
+  const List nls1 = [1, 2, 3];
+//  nls1[1] = 4;
+
+  //9. 相同的const常量不会在内存中重复创建
+  final finalList1 = [1, 2];
+  final finalList2 = [1, 2];
+  print(identical(finalList1, finalList2)); //identical用于检查两个引用是否指向同一个对象
+
+  const constList1 = [1, 2];
+  const constList2 = [1, 2];
+  print(identical(constList1, constList2)); //identical用于检查两个引用是否指向同一个对象
+
+  //10. const 需要是编译时常量
+  final DateTime finalDateTime = DateTime.now();
+  //  const DateTime constDateTime = DateTime.now();//DateTime.now() 是运行期计算出来的值
+  const sum = 1 + 2; //使用内置数据类型的字面量通过基本运算得到的值
+  const aConstNum = 0;
+  const aConstBool = true;
+  const aConstString = 'a constant string';
+  const aConstNull = null;
+  const validConstString =
+      '$aConstNum, $aConstBool, $aConstString, $aConstNull';
+  print(validConstString); //使用计算结果为null或数字，字符串或布尔值的编译时常量的插值表达式
 }
