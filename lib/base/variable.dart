@@ -95,18 +95,18 @@ main(List<String> args) {
 
   /// ---------------------------------final和const--------------------------------
   //1.  被final或者const修饰的变量，变量类型可以省略
-  final fVariable1 = 'dongnao';
-//  final String fVariable1 = 'dongnao';
-  const cVariable1 = 'dongnao';
-//  const String cVariable1 = 'dongnao';
+  final fVariable1 = 'blend';
+//  final String fVariable1 = 'blend';
+  const cVariable1 = 'blend';
+//  const String cVariable1 = 'blend';
 
   //2.  被 final 或 const 修饰的变量无法再去修改其值。
-//   fVariable1 = 'damon';
-//   cVariable1 = 'damon';
+//   fVariable1 = 'android';
+//   cVariable1 = 'android';
 
   //3.  final或const不能和var同时使用。
-//  final var fVariable1 = 'dongnao';
-//  const var fVariable1 = 'dongnao';
+//  final var fVariable1 = 'blend';
+//  const var fVariable1 = 'blend';
 
   //4.  如果是类级别常量，使用static const
   DateTime; //可参照DateTime static const int monday = 1;
