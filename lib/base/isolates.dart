@@ -1,5 +1,6 @@
 import 'dart:isolate';
 
+///所有Dart代码都在隔离区内运行，而不是线程。每个隔离区都有自己的内存堆，确保不会从任何其他隔离区访问隔离区的状态。
 main() async {
   var receivePort = new ReceivePort();
   await Isolate.spawn(echo, receivePort.sendPort);
