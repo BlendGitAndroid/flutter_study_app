@@ -24,7 +24,7 @@ class Television {
     print('没有找到方法');
   }
 
-  @MetadataCustom(who: 'damon', what: 'create a new method')
+  @MetadataCustom(who: 'Blend', what: 'create a new method')
   void doSomething() {
     print('doSomething');
   }
