@@ -11,7 +11,9 @@ class TextApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('Text示例'),
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -37,11 +39,13 @@ class TextApp extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(
                       text: '开发者可以很快地为',
-                      style: TextStyle(color: Colors.deepPurple, fontSize: 20.0),
+                      style:
+                          TextStyle(color: Colors.deepPurple, fontSize: 20.0),
                     ),
                     TextSpan(
                         text: 'Flutter 添加 Native 扩展。', //
-                        style: TextStyle(color: Colors.tealAccent, fontSize: 20.0),
+                        style:
+                            TextStyle(color: Colors.tealAccent, fontSize: 20.0),
                         recognizer: TapGestureRecognizer()
                           //..操作符，级联，返回的对象还是自己，就像StringBuffer的级联
                           ..onTap = () async {
