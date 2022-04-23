@@ -17,6 +17,7 @@ class DismissibleGesture extends StatelessWidget {
         itemCount: items.length,
         itemBuilder: (context, index) {
           final item = items[index];
+          //每一个子Item
           return Dismissible(
             //监听滑动删除
             onDismissed: (_) {
