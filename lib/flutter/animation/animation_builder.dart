@@ -21,6 +21,9 @@ class _HomePageState extends State<HomePage>
       _doubleAnim?.removeStatusListener(myListener);
       // _animationController?.removeStatusListener(myListener);
       _animationController?.reset();
+      //Curve：定义了时间和数值的抽象类。Flutter封装定义了一系列的插值器，
+      // 如linear、decelerate、ease、bounce、cubic等。当然Flutter提供的不满足需求的话，也可以自定义插值器。
+      //Tween：线性估值器
       _doubleAnim = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
           parent: _animationController!, curve: Curves.fastOutSlowIn));
       _animationController?.forward();
