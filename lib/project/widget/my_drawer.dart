@@ -20,10 +20,11 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      //取消右侧的阴影
       elevation: 0.0,
       child: ListView.separated(
-        padding: const EdgeInsets.all(0.0), //解决状态栏问题
-        itemCount: menuTitles.length + 1,
+        padding: const EdgeInsets.all(0.0), //解决状态栏问题，将图片顶上去
+        itemCount: menuTitles.length + 1, //+1为了ListView.separated
         itemBuilder: (context, index) {
           if (index == 0) {
             return Image.asset(
@@ -31,7 +32,7 @@ class MyDrawer extends StatelessWidget {
               fit: BoxFit.cover,
             );
           }
-          index -= 1;
+          index -= 1; //-1为了ListTile
           return ListTile(
             leading: Icon(menuIcons[index]),
             title: Text(menuTitles[index]),
@@ -66,6 +67,7 @@ class MyDrawer extends StatelessWidget {
             );
           } else {
             return Divider(
+              //分割线Widget的高，不是分割线本身效果的高,可以达到两个Widget 之间margin的效果
               height: 1.0,
             );
           }

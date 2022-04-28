@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
       title: '开源中国',
       theme: ThemeData(
         primaryColor: AppColors.APP_THEME,
+        primarySwatch: AppColors.APP_THEME,
       ),
       home: ProjectHomePage(),
     );

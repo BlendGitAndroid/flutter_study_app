@@ -67,8 +67,8 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
         iconTheme: IconThemeData(color: AppColors.APPBAR),
       ),
       body: PageView.builder(
-        physics: NeverScrollableScrollPhysics(),
         //禁止滑动
+        // physics: NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return _pages![index];
         },
