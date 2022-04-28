@@ -30,6 +30,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.5
   url_launcher: ^6.0.20
+  event_bus: ^2.0.0
+  http: ^0.13.4
+  shared_preferences: ^2.0.13
+  webview_flutter: ^3.0.2
+
 
   #网络请求库
   dio: ^4.0.6
@@ -61,6 +66,7 @@ flutter:
     - assets/images/ic_nav_my_normal.png
     - assets/images/ic_nav_my_press.png
     - assets/images/cover_img.jpg
+    - assets/images/ic_avatar_default.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
