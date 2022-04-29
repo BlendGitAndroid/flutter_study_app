@@ -1,4 +1,9 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:sensors_plus/sensors_plus.dart';
+import 'package:vibration/vibration.dart';
 
 class ShakePage extends StatefulWidget {
   @override
@@ -8,10 +13,40 @@ class ShakePage extends StatefulWidget {
 class _ShakePageState extends State<ShakePage> {
   bool isShake = false;
   int _currentIndex = 0;
+  StreamSubscription? _streamSubscription;
+  static const int SHAKE_TIMEOUT = 500;
+  static const double SHAKE_THRESHOLD = 3.25;
+  var _lastTime = 0;
 
   @override
   void initState() {
     super.initState();
+    _streamSubscription =
+        accelerometerEvents.listen((AccelerometerEvent event) {
+      var now = DateTime.now().millisecondsSinceEpoch;
+      if ((now - _lastTime) > SHAKE_TIMEOUT) {
+        var x = event.x;
+        var y = event.y;
+        var z = event.z;
+        double acce = sqrt(x * x + y * y + z * z) - 9.8; //g
+        if (acce > SHAKE_THRESHOLD) {
+          print('摇一摇');
+          //手机晃动了
+          Vibration.vibrate();
+          _lastTime = now;
+          if (!mounted) return;
+          setState(() {
+            isShake = true;
+          });
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _streamSubscription?.cancel();
   }
 
   @override
@@ -22,7 +57,6 @@ class _ShakePageState extends State<ShakePage> {
       ),
       body: Center(
         child: Column(
-          //Column居中显示
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset(
@@ -30,11 +64,10 @@ class _ShakePageState extends State<ShakePage> {
               width: 120.0,
               height: 120.0,
             ),
-            //间隔
             SizedBox(
               height: 10.0,
             ),
-            Text('摇一摇获取礼品'),
+            Text(isShake ? '活动已结束！' : '摇一摇获取礼品'),
           ],
         ),
       ),
@@ -48,6 +81,7 @@ class _ShakePageState extends State<ShakePage> {
           if (!mounted) return;
           setState(() {
             _currentIndex = index;
+            isShake = false;
           });
         },
       ),

@@ -1,4 +1,6 @@
+import 'package:barcode_scan2/platform_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_study_app/project/pages/shake_page.dart';
 
 import '../constants/constants.dart';
@@ -27,7 +29,14 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
     }
   ];
 
-  Future scan() async {}
+  Future<void> _scan() async {
+    try {
+      await BarcodeScanner.scan().then(
+          (value) => print("Discovery BarcodeScanner: " + value.rawContent));
+    } on PlatformException catch (e) {
+      print(e.message);
+    }
+  }
 
   void _handleItemClick(String title) {
     switch (title) {
@@ -35,7 +44,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
         _navToWebPage(title, 'https://zb.oschina.net/');
         break;
       case '扫一扫':
-        scan();
+        _scan();
         break;
       case '摇一摇':
         Navigator.of(context)
