@@ -95,7 +95,7 @@ class _MyMessagePageState extends State<MyMessagePage> {
                               Text(
                                 '${messageList?[index]['pubDate']}',
                                 style: TextStyle(
-                                    fontSize: 12.0, color: Color(0xffaaaaaa)),
+                                    fontSize: 12.0, color: AppColors.APP_GRAY),
                               ),
                             ],
                           ),

@@ -65,8 +65,9 @@ flutter:
     - assets/images/ic_nav_discover_active.png
     - assets/images/ic_nav_my_normal.png
     - assets/images/ic_nav_my_press.png
-    - assets/images/cover_img.jpg
+    - assets/images/ic_cover_img.jpg
     - assets/images/ic_avatar_default.png
+    - assets/images/ic_shake.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

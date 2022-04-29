@@ -4,6 +4,7 @@ abstract class AppColors {
   //应用主题色
   static const APP_THEME = Colors.green;
   static const APPBAR = Colors.white;
+  static const APP_GRAY = Color(0xffaaaaaa);
 }
 
 abstract class AppInfos {
@@ -30,6 +31,9 @@ abstract class AppUrls {
 
   //获取私信列表
   static const String MESSAGE_LIST = HOST + '/action/openapi/message_list';
+
+  //新闻列表
+  static const String NEWS_LIST = HOST + '/action/openapi/news_list';
 }
 
 abstract class AppConstants {

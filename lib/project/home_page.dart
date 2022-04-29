@@ -93,7 +93,7 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
         },
       ),
       drawer: MyDrawer(
-        headImgPath: 'assets/images/cover_img.jpg',
+        headImgPath: 'assets/images/ic_cover_img.jpg',
         menuIcons: [Icons.send, Icons.home, Icons.error, Icons.settings],
         menuTitles: ['发布动弹', '动弹小黑屋', '关于', '设置'], key: ObjectKey("MyDrawer"),
       ),
