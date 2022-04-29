@@ -34,6 +34,9 @@ abstract class AppUrls {
 
   //新闻列表
   static const String NEWS_LIST = HOST + '/action/openapi/news_list';
+
+  //获取新闻详情
+  static const String NEWS_DETAIL = HOST + '/action/openapi/news_detail';
 }
 
 abstract class AppConstants {

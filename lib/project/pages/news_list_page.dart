@@ -19,10 +19,19 @@ class _NewsListPageState extends State<NewsListPage> {
   bool isLogin = false;
   int curPage = 1;
   List? newsList;
+  ScrollController _controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    _controller.addListener(() {
+      var maxScroll = _controller.position.maxScrollExtent;
+      var pixels = _controller.position.pixels;
+      if (maxScroll == pixels) {
+        curPage++;
+        getNewsList(true);
+      }
+    });
     DataUtils.isLogin().then((isLogin) {
       if (!mounted) return;
       setState(() {
@@ -122,6 +131,7 @@ class _NewsListPageState extends State<NewsListPage> {
       return Center(child: CupertinoActivityIndicator());
     }
     return ListView.builder(
+        controller: _controller,
         itemCount: newsList?.length,
         itemBuilder: (context, index) {
           return NewsListItem(newsList: newsList?[index]);
