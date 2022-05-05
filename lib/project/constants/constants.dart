@@ -37,6 +37,12 @@ abstract class AppUrls {
 
   //获取新闻详情
   static const String NEWS_DETAIL = HOST + '/action/openapi/news_detail';
+
+  //获取动弹列表 （最新动弹列表 我的动弹）
+  static const String TWEET_LIST = HOST + '/action/openapi/tweet_list';
+
+  //发布动弹
+  static const String TWEET_PUB = HOST + '/action/openapi/tweet_pub';
 }
 
 abstract class AppConstants {
