@@ -85,7 +85,7 @@ class _StackAppState extends State<StackApp> {
   }
 
   //动态显示和不显示
-  Stack buildIndexedStack() {
+  IndexedStack buildIndexedStack() {
     return IndexedStack(
       index: _index,
       alignment: Alignment(1.2, -1.2),

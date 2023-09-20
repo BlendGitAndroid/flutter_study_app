@@ -12,8 +12,9 @@ main() {
 
   /// ---------------------------------异常的捕获try catch--------------------------------
   try {
-    throw new NullThrownError();
-//    throw new OutOfMemoryError();
+    // 兼容性问题,已经没有NullThrownError了
+    // throw new NullThrownError();
+    throw new OutOfMemoryError();
   } on OutOfMemoryError {
     //on 指定异常类型
     print('没有内存了');
