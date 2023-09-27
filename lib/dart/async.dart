@@ -11,38 +11,42 @@ import 'dart:async';
 
 /// Dart中的async/await 和JavaScript中的async/await功能是一样的：异步任务串行化。
 void main() {
-  getName1().then((_) => print('getName1 then'));
-  getName2();
-  getName3();
+  // getName1().then((_) => print('getName1 then'));
+  // getName2();
+  // getName3();
+  //
+  // //主要就是这三个方法的链式调用： then catchError whenComplete
+  // onErrorAndCatch();
+  //
+  // //Future 7,1,6,3,5,2,4
+  // testFuture();
+  //
+  // //scheduleMicroTask 918346572
+  // testScheduleMicroTask();
+  //
+  // // 需要等待多个异步任务都执行结束后才进行一些操作，答案是Future.wait，它接受一个Future数组
+  // // 参数，只有数组中所有Future都执行成功后，才会触发then的成功回调，只要有一个Future执行失败，
+  // // 就会触发错误回调。
+  // Future.wait([
+  //   // 2秒后返回结果
+  //   Future.delayed(Duration(seconds: 2), () {
+  //     return "hello";
+  //   }),
+  //   // 4秒后返回结果
+  //   Future.delayed(Duration(seconds: 4), () {
+  //     return " world";
+  //   })
+  // ]).then((results) {
+  //   print(results[0] + results[1]);
+  // }).catchError((e) {
+  //   print(e);
+  // });
 
-  //主要就是这三个方法的链式调用： then catchError whenComplete
-  onErrorAndCatch();
+  //-----------------------------------------------------------------------------
 
-  //Future 7,1,6,3,5,2,4
-  testFuture();
-
-  //scheduleMicroTask 918346572
-  testScheduleMicroTask();
-
-  // 需要等待多个异步任务都执行结束后才进行一些操作，答案是Future.wait，它接受一个Future数组
-  // 参数，只有数组中所有Future都执行成功后，才会触发then的成功回调，只要有一个Future执行失败，
-  // 就会触发错误回调。
-  Future.wait([
-    // 2秒后返回结果
-    Future.delayed(Duration(seconds: 2), () {
-      return "hello";
-    }),
-    // 4秒后返回结果
-    Future.delayed(Duration(seconds: 4), () {
-      return " world";
-    })
-  ]).then((results) {
-    print(results[0] + results[1]);
-  }).catchError((e) {
-    print(e);
-  });
-
-  task();
+  // 先打印"task之后打印",这句话
+  task().then((_) => print('task then'));
+  print("task之后打印");
 }
 
 // then中接收异步结果并处理
@@ -165,7 +169,7 @@ void testScheduleMicroTask() {
 // 当前函数必须是异步函数(即在函数头中包含关键字async的函数);
 // await修饰的任务必须是异步任务
 
-void task() async {
+Future<void> task() async {
   try {
     String id = await login("alice", "******");
     String userInfo = await getUserInfo(id);
