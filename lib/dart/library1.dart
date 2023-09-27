@@ -11,6 +11,5 @@ class Library1 {
 
 class Test {
   void test() => print('Library1 Test');
+  void lazy() => print('Library1 Lazy');
 }
-
-test() {}

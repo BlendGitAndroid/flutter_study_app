@@ -1,5 +1,6 @@
 ///Dart变量，三斜杠文档注释
 
+/// 没有初始化的变量自动获取一个默认值为
 ///var:如果没有初始值，可以变成任何类型
 ///dynamic:动态任意类型，编译阶段不检查类型
 ///Object:动态任意类型，编译阶段检查检查类型
@@ -10,7 +11,7 @@
 
 ///final和const
 ///1.被final或者const修饰的变量，变量类型可以省略
-///2.被 final 或 const 修饰的变量无法再去修改其值。
+///2.被 final 或 const 修饰的变量无法再去修改其值。并且const具体传递性，他的子元素也不可变
 ///3.final或const不能和var同时使用。
 
 main(List<String> args) {
@@ -34,16 +35,17 @@ main(List<String> args) {
   ///使用强类型定义变量，类型确定之后，变量类型就不可变了
   String userName = 'Blend';
   int age = 20;
-  double saleryPrice = 12.3;
+  double salaryPrice = 12.3;
   num weight = 1200;
   print(
-      'name = $userName and age = $age,price = $saleryPrice,and weight = $weight');
+      'name = $userName and age = $age,price = $salaryPrice,and weight = $weight');
 
   ///任意类型变量声明，注意dynamic和Object的区别
   dynamic anything = 12;
   anything = 'good job';
-  anything.test(); //编译时不会检查类型，这就是和Object的区别
+  // anything.test(); //编译时不会检查类型，这就是和Object的区别
 
+  // 这样也是可以的，就是和dynamic一样
   Object anythingObj = 'this is object type';
   anythingObj = 12;
   print('dynamic type $anything and anythingObj = $anythingObj');
@@ -79,10 +81,12 @@ main(List<String> args) {
   final DateTime currentDateTime = DateTime.now(); // 赋值之后就不可修改，运行时确定值，不传递
   print(currentDateTime);
 
+  // const是一个编译时的常量
   const PI = 3.1415926; // const 必须是明确的值，编译时确定值， 传递
   print(PI);
 
   final ls = [1, 2, 3, 4, 5, 6]; // 不传递不可变性，不影响子元素的可变性
+  // final ls = const [1, 2, 3, 4, 5, 6];   注意区分数组前面加const和不加const的情况，加了const的不能改变他的值
   ls[1] = 10;
   print(ls);
 
@@ -91,6 +95,7 @@ main(List<String> args) {
 
   /// 使用const 定义的变量，如果在内存中已经存在， 则会复用
   const ls2 = [1, 2, 3, 4, 5, 6];
+  // `identical` 方法比较的是对象的引用，而不是对象的值
   print(identical(ls1, ls2)); // true ls1 和 ls2 是相同对象
 
   /// ---------------------------------final和const--------------------------------
@@ -155,4 +160,19 @@ main(List<String> args) {
   const validConstString =
       '$aConstNum, $aConstBool, $aConstString, $aConstNull';
   print(validConstString); //使用计算结果为null或数字，字符串或布尔值的编译时常量的插值表达式
+
+  // 空安全
+  // - `?.`：可选调用运算符。用于访问可能为null的属性或方法。
+  // - `??`：空合并运算符。用于提供一个默认值，当变量为null时使用。
+  // - `!`：非空断言运算符。用于断言一个变量不为null。
+  int i = 8; //默认为不可空，必须在定义时初始化。
+  int? j; // 定义为可空类型，对于可空变量，我们在使用前必须判空。
+  print(j?.toString()); // 使用?.操作符，如果j为空，则返回null，否则返回j.toString()的值
+
+// 如果我们预期变量不能为空，但在定义时不能确定其初始值，则可以加上late关键字，
+// 表示会稍后初始化，但是在正式使用它之前必须得保证初始化过了，否则会报错
+  late int k;
+  k = 9;
+
+  print(int); //这里会打印出int
 }

@@ -17,7 +17,7 @@ main() {
   num dNum = 1.0;
   int i = iNum as int; //将num转换成int
   double d = dNum as double;
-  print([i, d]);
+  print([i, d]);  //[]代表list,也就是数组
 
 //  String s = iNum as String;
 
@@ -42,7 +42,8 @@ main() {
 
   print('isPaused: $isPaused');
 
-  //或者  赋值运算符 ??=
+  // 或者  赋值运算符 ??=
+  // 如果 ??= 运算符前面的变量为 null，则赋值给它，否则保持原来的值
   isPaused ??= false;
 
   print('isPaused: $isPaused');
@@ -60,7 +61,7 @@ main() {
   print(sb);
 
   //流程控制
-  var collection = [0, 1, 2];
+  var collection = [0, 1, 2]; //list
   //forEach
   collection.forEach((item) => print('forEach: $item'));
   //for-in遍历元素

@@ -1,4 +1,6 @@
-library custom_lib; //库的拆分
+//库的拆分
+
+library custom_lib; // 声明库名
 
 part 'tools.dart';
 part 'utils.dart';

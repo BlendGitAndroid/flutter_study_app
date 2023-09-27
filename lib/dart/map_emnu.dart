@@ -5,7 +5,7 @@ main() {
   var map1 = <String, dynamic>{'name': 'blend', 'age': 20, 'weight': 120};
   print(map1);
 
-  ///转换成json
+  ///map转换成json
   var jsonStr = jsonEncode(map1);
   print(jsonStr);
 

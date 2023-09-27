@@ -64,7 +64,7 @@ class Mall extends Person with Buy, PersonInfo {
 class HttpClient {
   static final HttpClient _client = HttpClient._internal();
 
-  //私有构造函数
+  //私有构造函数,扩展构造函数用_开头,就是私有的
   HttpClient._internal();
 
   factory HttpClient() {

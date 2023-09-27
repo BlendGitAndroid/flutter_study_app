@@ -35,7 +35,7 @@ main() {
   //运行时可判断泛型
   var names = List<String>.empty(growable: true);
   print(names is List<String>);
-  print(names.runtimeType);
+  print(names.runtimeType);//这里没有进行类型擦除
 }
 
 //构造函数泛型

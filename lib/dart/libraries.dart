@@ -6,9 +6,16 @@ import 'dart:math'; //载入核心库
 import 'package:dio/dio.dart'; //载入第三库
 
 import 'customLib/custom_lib.dart'; //载入自定义库，进行了库的拆分
+import 'library2.dart' as lib2;
+import 'library1.dart' as lib1;
+
 // import 'library2.dart' as lib2 hide Test; //筛选掉库的某些部分
 // import 'library1.dart' as lib1 show Test; //只载入库的某些部分
 
+// 注意,这里使用的是deferred as，而不是as
+// as关键字用于类型转换,也就是起一个别名。当你希望将一个对象强制转换为特定类型时，可以使用as关键字。
+// deferred as关键字用于延迟加载库中的类型或成员。当你希望在需要时才加载某个库的类型或成员时，
+// 可以使用deferred as关键字。通过延迟加载，可以减少应用程序的初始加载时间和内存占用。
 import 'library1.dart' deferred as lazyLib; //延迟载入
 
 ///库的拆分：有的时候一个库可能太大，不能方便的保存在一个文件当中。Dart允许我们把一个库拆分成一个或者多个较小的part组件。
@@ -26,12 +33,12 @@ main() {
   getHttp();
 
   //载入文件
-  // var myLib1 = lib1.Library1();
-  // var myLib2 = lib2.Library2();
+  var myLib1 = lib1.Library1();
+  var myLib2 = lib2.Library2();
 
   //选择性载入文件
-  // var test = lib1.Test();
-  // var lib = lib2.Library2();
+  var test = lib1.Test();
+  test.test();
 
   //延迟载入
   lazyLoad();
@@ -56,8 +63,10 @@ void getHttp() async {
 //可提高程序启动速度
 //用在不常使用的功能
 //用在载入时间过长的包
+//从打印出来的结果来看,延迟加载是异步的,打印出来的结果在{载入自定义库这三个函数的后面}
 lazyLoad() async {
+  // 延迟加载库的加载是异步的，需要使用await关键字等待加载完成
   await lazyLib.loadLibrary();
   var t = lazyLib.Test();
-  t.test();
+  t.lazy();
 }

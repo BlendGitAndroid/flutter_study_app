@@ -5,12 +5,12 @@ main() {
   /// double：64位双精度浮点数
   /// int和double是num的子类
   print('-----------------------Numbers------------------------');
-  int i = 1; //整数值
+  int i = 3; //整数值
   double d = 1.0; //double  64-bit (双精度) 浮点数
   int bitLength = i.bitLength;
-  print('bitLength: $bitLength'); //bitLength判断int值需要多少bit位
+  print('bitLength: $bitLength'); //bitLength返回存储该整数所需的最小位数
   double maxFinite = double.maxFinite;
-  print('maxFinite: $maxFinite'); //maxFinite double的最大值
+  print('maxFinite: $maxFinite'); //maxFinite double的最大值,是用static const定义的
   //int和double都是num的子类
   num n1 = 1;
   num n2 = 1.0;
@@ -21,9 +21,10 @@ main() {
   //转换
   //String->int
   int i2 = int.parse('1');
+  int? i22 = int.tryParse('1.0');
+  print('i2: $i2 -- i22: $i22');
   double d2 = 1; //当double的值为int值时，int自动转成double
   print('d2: $d2');
-//  int i2 = int.tryParse('1.0');//返回null
 
   //int->String
   String str = 123.toString(); //数字也是对象
@@ -66,7 +67,7 @@ main() {
   /// ---------------------------------Lists列表(数组):List--------------------------------
   print('-----------------------Lists------------------------');
   //声明
-  //自动长度
+  //自动长度，[]默认是List类型
   List growableList = [];
   growableList
     ..add(1)
@@ -117,7 +118,7 @@ main() {
   //改
   list4[4] = 5;
   print('update list4[4] to 5 :$list4}');
-  //range
+  //range，从0开始，3个元素用9填充
   list4.fillRange(0, 3, 9);
   print('fillRange update list4[0]-list4[2] to 9 :$list4}');
   Iterable getRange = list4.getRange(0, 3);
@@ -125,17 +126,24 @@ main() {
   //查
   var contains = list4.contains(5);
   print('list4 contains 5 :$contains');
+
+  // indexOf 返回满足条件的第一个元素的索引，如果没有元素满足条件则返回-1
   var indexOf = list4.indexOf(1);
   print('list4 indexOf 1 :$indexOf');
+
+  // indexWhere 返回满足条件的第一个元素的索引，如果没有元素满足条件则返回-1
   int indexWhere = list4.indexWhere((test) => test == 5);
   print('list4 indexWhere 5 :$indexWhere');
+
   //排序
   list4.sort();
   print('list4 sort :$list4');
   //洗牌
   list4.shuffle();
   print('list4 shuffle :$list4');
-  //复制子列表
+
+  // 返回一个新列表，其中包含 [start] 和 [end] 之间的元素
+  // 如果 [end] 超出范围，则使用列表的长度作为 [end]
   var list5 = list4.sublist(1);
   print('sublist(1) list5 :$list5');
   //操作符
@@ -158,16 +166,16 @@ main() {
   map[1] = 'android';
   map[2] = 'flutter';
   print('map :$map');
-  //也可以这样声明
+  //也可以这样声明，因为{}默认是Map类型
   var map1 = {'name': 'android', 1: 'android'};
   map1.addAll({'name': 'blend'});
   print('map1 :$map1');
   //常用属性
-//  print(map.isEmpty); //是否为空
-//  print(map.isNotEmpty); //是否不为空
-//  print(map.length); //键值对个数
-//  print(map.keys); //key 集合
-//  print(map.values); //value集合
+  print(map.isEmpty); //是否为空
+  print(map.isNotEmpty); //是否不为空
+  print(map.length); //键值对个数
+  print(map.keys); //key 集合
+  print(map.values); //value集合
 
   //常用方法 增删改查
   print('-----------------------Maps------------------------');
@@ -210,7 +218,7 @@ main() {
   Runes runes = new Runes('\u{1f605} \u6211');
   var str1 = String.fromCharCodes(runes); //使用String.fromCharCodes显示字符图形
   print(str1);
-  String str2 = '\u{1f605} \u6211'; //如果非4个数值，需要把编码值放到大括号中
+  String str2 = '\u{1f605} \u6211'; //直接输出字符图形
   print(str2);
 
   /// ---------------------------------Symbols标识符--------------------------------

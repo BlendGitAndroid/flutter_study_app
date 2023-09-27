@@ -4,15 +4,14 @@ main() {
   //普通构造函数
   var p = Point(1, 1); //new 可省略 var point = Point(1, 2);
   print(p);
-//  Point p1;
-//  print(p1.runtimeType); //可以使用Object类的runtimeType属性,获取对象的类型
+  print(p.runtimeType); //可以使用Object类的runtimeType属性,获取对象的类型
 
-  //命名构造函数
+  //命名构造函数, 这里的{}就是一个json
   p = Point.fromJson({'x': 2, 'y': 2});
   print(p);
 
   //重定向构造函数
-  p = Point.alongXAxis(0);
+  p = Point.alongXAxis(4);
   print(p);
 
   //调用超类构造函数
@@ -30,6 +29,8 @@ main() {
   //工厂方法构造函数
   var singleton1 = Singleton('blend');
   var singleton2 = Singleton('android');
+  // 单列模式,只有一个实例,就是第一个创建的实例
+  print("singleton1.name = ${singleton1.name}");
   print(identical(singleton1, singleton2));
 
   //工厂模式两种方式
@@ -87,21 +88,30 @@ class Point {
   //默认构造函数，这是Dart的写法
   // Point(this.x, this.y);
 
+  // 还可以这样写
+  // Point(x, y) : this.x = x, this.y = y;
+
   //命名构造函数
   Point.fromJson(Map json) {
     x = json['x'];
     y = json['y'];
   }
 
+  // 上面的命名构造函数,还有一种这样的写法
+  Point.fromJson1(Map json) : x = json['x'], y = json['y'];
+
   //重定向构造函数 使用冒号调用其他构造函数
   Point.alongXAxis(num x) : this(x, 0);
 
   //初始化列表
+  // `:`后面的部分是初始化列表，使用冒号分隔。`distanceFromOrigin`是一个类的成员变量，
+  // 这里使用了一个表达式来初始化它。`distanceFromOrigin`的值被计算为`sqrt(x * x + y * y)`，
+  // 即平方根开方的方式计算点到原点的距离。
   Point(this.x, this.y) : distanceFromOrigin = sqrt(x * x + y * y);
 
   @override
   String toString() {
-    return 'Point(x = $x, y = $y)';
+    return 'Point(x = $x, y = $y) = $distanceFromOrigin';
   }
 }
 
@@ -175,32 +185,32 @@ class Singleton {
 }
 
 //工厂函数
-class Android {
-  void doAndroid() {
-    print('Android');
-  }
-}
-
-class ReactNativeAndroid extends Android {
-  @override
-  doAndroid() {
-    print('ReactNative');
-  }
-}
-
-class FlutterAndroid extends Android {
-  @override
-  void doAndroid() {
-    print('Flutter');
-  }
-}
-
-class NativeAndroid extends Android {
-  @override
-  void doAndroid() {
-    print('native');
-  }
-}
+// class Android {
+//   void doAndroid() {
+//     print('Android');
+//   }
+// }
+//
+// class ReactNativeAndroid extends Android {
+//   @override
+//   doAndroid() {
+//     print('ReactNative');
+//   }
+// }
+//
+// class FlutterAndroid extends Android {
+//   @override
+//   void doAndroid() {
+//     print('Flutter');
+//   }
+// }
+//
+// class NativeAndroid extends Android {
+//   @override
+//   void doAndroid() {
+//     print('native');
+//   }
+// }
 
 Android AndroidFactory(String type) {
   switch (type) {
@@ -212,43 +222,54 @@ Android AndroidFactory(String type) {
       return new NativeAndroid();
   }
 }
-
+// 什么是工厂构造函数？
+//
+// 与普通构造函数不同，工厂函数不会自动生成实例，而是通过代码来决定返回的实例对象。
+// 在Dart中，工厂构造函数的关键字为factory。
+// 我们知道，构造函数包含类名构造函数和命名构造方法，在构造方法前加上factory之后变成了工厂构造函数。
+// 也就是说factory可以放在类名函数之前，也可以放在命名函数之前。
 //工厂模式
-// abstract class Android {
-//  factory Android(String type) {
-//    switch (type) {
-//      case 'rn':
-//        return new ReactNativeAndroid();
-//      case 'Flutter':
-//        return new FlutterAndroid();
-//      default:
-//        return new NativeAndroid();
-//    }
-//  }
-//
-//  void doAndroid();
-// }
-//
-// class ReactNativeAndroid implements Android {
-//  @override
-//  doAndroid() {
-//    print('ReactNative');
-//  }
-// }
-//
-// class FlutterAndroid implements Android {
-//  @override
-//  void doAndroid() {
-//    print('Flutter');
-//  }
-// }
-//
-// class NativeAndroid implements Android {
-//  @override
-//  void doAndroid() {
-//    print('Flutter');
-//  }
-// }
+abstract class Android {
+  factory Android(String type) {
+    switch (type) {
+      case 'rn':
+        return new ReactNativeAndroid();
+      case 'Flutter':
+        return new FlutterAndroid();
+      default:
+        return new NativeAndroid();
+    }
+  }
+
+  void doAndroid();
+}
+
+
+// 将implements改为extends会报错
+// 当一个类被扩展时，子类会继承父类的构造函数。然而，在这种情况下，由于'Android'只有工厂构造函数，
+// 意味着'ReactNativeAndroid'没有可以继承的普通生成构造函数。
+// 生成构造函数允许使用'new'关键字创建类的新实例。由于'Android'中没有任何生成构造函数，
+// 'ReactNativeAndroid'无法使用常规的构造函数语法来创建'Android'的新实例。
+class ReactNativeAndroid implements Android {
+  @override
+  doAndroid() {
+    print('ReactNative');
+  }
+}
+
+class FlutterAndroid implements Android {
+  @override
+  void doAndroid() {
+    print('Flutter');
+  }
+}
+
+class NativeAndroid implements Android {
+  @override
+  void doAndroid() {
+    print('Flutter');
+  }
+}
 
 //setter getter
 //每个实例变量都隐含的具有一个 getter， 如果变量不是 final 的则还有一个 setter
@@ -289,7 +310,7 @@ class Programmer implements People {
   }
 }
 
-//可调用类
+//可调用类,将类作为函数使用
 class ClassFunction {
   call(String a, String b, String c) => '$a $b $c!';
 }
