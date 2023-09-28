@@ -10,6 +10,8 @@ class ContainerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // 如果是无状态的组件，在home中，直接就是Scaffold组件
+      // 这后面的都是组件，也就是一个类，那()里面的就是构造方法的参数
       home: Scaffold(
         appBar: AppBar(
           title: Text('Container Title'),
@@ -17,7 +19,7 @@ class ContainerApp extends StatelessWidget {
         body: Center(
           child: Container(
             padding: EdgeInsets.only(top: 20),
-            width: 200,
+            width: 300,
             height: 200,
             // color: Colors.blue,不能同时定义，所以这里注释掉
             decoration: BoxDecoration(
@@ -28,10 +30,13 @@ class ContainerApp extends StatelessWidget {
               'Container',
               style: TextStyle(fontSize: 28),
             ),
-            transform: Matrix4.rotationZ(-pi / 9),
+            transform: Matrix4.rotationZ(-pi / 9), //旋转，围绕Z轴旋转
           ),
         ),
       ),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      )
     );
   }
 }

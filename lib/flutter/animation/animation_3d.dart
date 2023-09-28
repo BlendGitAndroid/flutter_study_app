@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
             ..rotateY(_offset.dx * 0.01),
           //手势
           child: GestureDetector(
+            // 拖动
             onPanUpdate: (details) {
               setState(() {
                 _offset += details.delta; //更新offset（point）

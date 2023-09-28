@@ -91,6 +91,7 @@ main() {
   //赋值给变量
   //无参匿名函数
   var anonFunc1 = () => print('无参匿名函数');
+  var anonFunc11 = () { print('无参匿名函数11');};
   anonFunc1();
 
   //有参匿名函数

@@ -36,7 +36,8 @@ class ImageApp extends StatelessWidget {
               ///从内存中加载
               LoadFromMemoryWidget(),
 
-              ///从文件中加载
+              /// 这也就是为什么Flutter中的一切皆对象
+              ///从文件中加载，就像实例化类一样，其实这个Widget就是一个类，类中有一个方法build，这个方法返回一个Widget
               LoadFromFileWidget(),
             ],
           ),
@@ -94,16 +95,29 @@ class LoadFromFileWidget extends StatefulWidget {
 class _LoadFromFileWidgetState extends State<LoadFromFileWidget> {
   XFile? _file;
 
-  Future getImage() async {
+  void _getImage() async {
+    // 通过await等到异步操作的结果
+    // 只要在async方法中，如果有返回值，那么返回值都是Future类型，且一定会有return，但是方法的return不需要写Future
+    // 调用这个async方法，通过await获取返回到真正结果
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
       _file = image;
     });
   }
 
+  // 上面的方法还可以这样写
+  void _getImage2() {
+    ImagePicker().pickImage(source: ImageSource.gallery).then((value) => {
+          setState(() {
+            _file = value;
+          })
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      // Column组件的children是一个数组，所以可以有多个子组件
       children: <Widget>[
         Center(
             child: _file == null
@@ -114,7 +128,7 @@ class _LoadFromFileWidgetState extends State<LoadFromFileWidget> {
                     height: 100,
                   )),
         ElevatedButton(
-          onPressed: getImage,
+          onPressed: _getImage2,
           child: Text(
             '选择图片',
             style: TextStyle(

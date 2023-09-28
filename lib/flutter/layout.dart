@@ -76,18 +76,28 @@ class _StackAppState extends State<StackApp> {
         // child: buildAlignmentStack(),
         child: buildIndexedStack(),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        setState(() {
-          _index = (++_index) % 2;
-        });
-      }),
+      floatingActionButton: FloatingActionButton(
+          child: Text('点击'),
+          onPressed: () {
+            setState(() {
+              _index = (++_index) % 2;
+            });
+          }),
     );
   }
 
   //动态显示和不显示
   IndexedStack buildIndexedStack() {
+    // 根据索引值决定显示哪一个子组件，并将其放置在堆叠布局中。
     return IndexedStack(
       index: _index,
+      // `Alignment`是一个用于指定水平和垂直方向上对齐方式的类。它在Flutter中常用于布局相关
+      // 的小部件中，如`Container`、`Align`等。
+      // `Alignment`的常用属性包括：
+      // - `x`：一个`double`值，表示水平方向上的对齐方式。取值范围为-1.0到1.0之间，
+      // 其中-1.0表示左对齐，0.0表示居中对齐，1.0表示右对齐。
+      // - `y`：一个`double`值，表示垂直方向上的对齐方式。取值范围为-1.0到1.0之间，
+      // 其中-1.0表示顶部对齐，0.0表示居中对齐，1.0表示底部对齐。
       alignment: Alignment(1.2, -1.2),
       children: <Widget>[
         Container(
@@ -95,6 +105,7 @@ class _StackAppState extends State<StackApp> {
           width: 200.0,
           height: 200.0,
         ),
+        // 通过`CircleAvatar`可以很方便的实现一个圆形头像样式的小部件。
         CircleAvatar(
           radius: 30.0,
           backgroundColor: Color(0xffff0000),
@@ -106,7 +117,7 @@ class _StackAppState extends State<StackApp> {
   //偏移位置
   Stack buildAlignmentStack() {
     return Stack(
-      //定义偏移位置，中间就是0.0的位置，右上角是（1，-1），再偏移就是（1.2，-1.2）
+      //定义子组件的对齐方式，中间就是0.0的位置，右上角是（1，-1），再偏移就是（1.2，-1.2）
       alignment: Alignment(1.2, -1.2),
       children: <Widget>[
         Container(
@@ -124,6 +135,7 @@ class _StackAppState extends State<StackApp> {
 
   //绝对位置
   Stack buildPositionedStack() {
+    // 一个用于堆叠多个子组件的布局小部件。它允许将多个子组件放置在一起，并可以控制它们的堆叠顺序、位置和尺寸
     return Stack(
       children: <Widget>[
         Container(
@@ -131,8 +143,10 @@ class _StackAppState extends State<StackApp> {
           width: 200.0,
           height: 200.0,
         ),
+        // 绝对布局
         Positioned(
-//              top: 10.0,
+          top: 10.0,
+          right: 10.0,
           child: CircleAvatar(
             radius: 20.0,
             backgroundColor: Color(0xff0000ff),

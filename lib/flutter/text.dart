@@ -36,6 +36,7 @@ class TextApp extends StatelessWidget {
                 text: TextSpan(
                   text: 'Flutter 提供了丰富的组件、接口，',
                   style: TextStyle(color: Colors.deepOrange, fontSize: 20.0),
+                  // RichText还有子孩子
                   children: <TextSpan>[
                     TextSpan(
                       text: '开发者可以很快地为',
@@ -48,14 +49,23 @@ class TextApp extends StatelessWidget {
                             TextStyle(color: Colors.tealAccent, fontSize: 20.0),
                         recognizer: TapGestureRecognizer()
                           //..操作符，级联，返回的对象还是自己，就像StringBuffer的级联
+                          // 这里还用到了匿名函数
                           ..onTap = () async {
                             String url = 'https://www.baidu.com/';
-                            if (await canLaunch(url)) {
-                              await launch(url);
+                            if (await canLaunchUrl(Uri.parse(url))) {
+                              await launchUrl(Uri.parse(url));
                             } else {
                               throw 'error: $url';
                             }
-                          }),
+                          }
+
+                          // 这里也是匿名函数,将后面的函数对象赋值给onTapDown
+                          // 因为onTapDown是一个函数对象，所以可以这样写
+                          ..onTapDown = (TapDownDetails details) {
+                            print('onTapDown');
+                          }
+                          // 也可以这样写
+                          ..onTapDown = (details) => print('onTapDown')),
                   ],
                 ),
               ),

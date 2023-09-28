@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('listview recorded'),
       ),
+      // ReorderableListView是一个可重新排序项目的可滚动列表组件，可以让用户通过拖动来重新排列列表中的项目
       body: ReorderableListView(
         onReorder: _onReorder,
         children: list

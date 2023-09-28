@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List list = [];
+  // 通过`ScrollController`，可以监听滚动位置的变化，控制滚动的位置，以及执行其他与滚动相关的操作。
   ScrollController? _scrollController;
 
   @override
@@ -69,7 +70,9 @@ class _HomePageState extends State<HomePage> {
                     child: CircularProgressIndicator(),
                   )
                 : ListView.builder(
+                    // 设置滑动控制器
                     controller: _scrollController,
+                    // 设置item数量,加1是为了显示加载更多的圈圈
                     itemCount: list.length + 1,
                     itemBuilder: (context, index) {
                       //加载loadMore的动画圈圈

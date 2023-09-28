@@ -6,7 +6,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // 是一个`String`类型的属性，用于设置整个应用程序的标题。
       title: 'MaterialApp',
+      // 初始化路由,是一个hashmap,{}里面的key是路由名称，value是一个函数，返回一个Widget
       routes: {'/other': (BuildContext context) => OtherPage()},
 //      initialRoute: '/other',
       home: HomePage(),
@@ -21,6 +23,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+
+  // 定义了一个数组，数组中的每个元素都是一个Text Widget
   final _widgetOptions = [
     Text('信息'),
     Text('通讯录'),
@@ -32,25 +36,50 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // 是一个`Widget`类型的属性，用于设置当前界面所显示的标题栏。
         title: Text('MaterialApp示例'),
+        // 标题居中
+        centerTitle: true,
+        // 左侧图标
+        leading: Icon(Icons.home),
+        //阴影
+        elevation: 10.0,
+        // 右侧图标
+        actions: [
+          Icon(Icons.search),
+          Icon(Icons.more_vert),
+        ],
       ),
-      body: _widgetOptions.elementAt(_currentIndex),
+      body: Center(
+        // 是一个`Widget`类型的属性，用于设置当前界面所显示的主要内容区域。
+        // 该属性通常使用`Column`或`ListView`来设置。
+        child: _widgetOptions.elementAt(_currentIndex),
+      ),
+
+      // FloatingActionButton是一个悬浮按钮，点击后会执行onPressed方法中的代码
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // 路由跳转
           Navigator.pushNamed(context, '/other');
         },
         tooltip: '路由跳转',
-        foregroundColor: Color(0xffffffff),
-        backgroundColor: Color(0xff000000),
+        // 前景色
+        foregroundColor: Colors.lime,
+        // 背景色
+        backgroundColor: Colors.red,
         //阴影
-        elevation: 0.0,
+        elevation: 10.0,
         child: Icon(Icons.arrow_forward),
         //改成方形
         shape: RoundedRectangleBorder(),
       ),
+      // FloatingActionButton的位置
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+      // 底部导航栏
       bottomNavigationBar: BottomNavigationBar(
         items: [
+          // 底部导航栏的按钮
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
             label: '信息',
@@ -68,8 +97,11 @@ class _HomePageState extends State<HomePage> {
             label: '我',
           ),
         ],
+        // 当前选中的按钮
         currentIndex: _currentIndex,
+        // 导航栏类型
         type: BottomNavigationBarType.fixed,
+        // 点击事件
         onTap: (index) {
           setState(() {
             _currentIndex = index;

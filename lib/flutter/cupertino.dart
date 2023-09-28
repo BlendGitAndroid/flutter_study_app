@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// iOS风格组件
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -21,9 +22,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    // return tabScaffold();
+    return tabScaffold();
     // return alertDialog();
-    return progressIndicator();
+    // return progressIndicator();
   }
 
   Scaffold progressIndicator() {
@@ -34,6 +35,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             //Android风格
             CircularProgressIndicator(
+              // 设置大小
               strokeWidth: 5,
             ),
             SizedBox(
@@ -41,6 +43,7 @@ class _HomePageState extends State<HomePage> {
             ),
             //iOS风格
             CupertinoActivityIndicator(
+              // 设置大小
               radius: 15.0,
             ),
           ],
@@ -70,6 +73,7 @@ class _HomePageState extends State<HomePage> {
 
   CupertinoTabScaffold tabScaffold() {
     return CupertinoTabScaffold(
+      // 底部导航栏
       tabBar: CupertinoTabBar(
         items: [
           BottomNavigationBarItem(
@@ -104,12 +108,14 @@ class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+      // 导航栏
       navigationBar: CupertinoNavigationBar(
         middle: Text('主页'),
         leading: Icon(CupertinoIcons.back),
         trailing: Icon(CupertinoIcons.search),
       ),
       child: Center(
+        // 按钮
         child: CupertinoButton(
           child: Text('主页'),
           color: Color(0xff0000ff),
@@ -127,7 +133,7 @@ class MyMessage extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         middle: Text('消息'),
         leading: Icon(CupertinoIcons.back),
-        trailing: Icon(CupertinoIcons.search),
+        trailing: Icon(CupertinoIcons.calendar),
       ),
       child: Center(
         child: CupertinoButton(
