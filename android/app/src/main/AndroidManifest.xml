@@ -3,7 +3,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="GitHubAPP">
+        android:label="OSCHINA">
         <activity
             android:exported="true"
             android:name=".MainActivity"
