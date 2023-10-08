@@ -64,8 +64,8 @@ flutter:
     - lib/flutter/images/ic_fu.png
     - assets/images/ic_nav_news_normal.png
     - assets/images/ic_nav_news_active.png
-    - assets/images/ic_nav_tweet_normal.png
-    - assets/images/ic_nav_tweet_active.png
+    - assets/images/ic_nav_blog_normal.png
+    - assets/images/ic_nav_blog_active.png
     - assets/images/ic_nav_discover_normal.png
     - assets/images/ic_nav_discover_active.png
     - assets/images/ic_nav_my_normal.png

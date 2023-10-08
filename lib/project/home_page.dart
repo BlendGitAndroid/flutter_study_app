@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_study_app/project/pages/blog_page.dart';
 import 'package:flutter_study_app/project/pages/discovery_page.dart';
 import 'package:flutter_study_app/project/pages/news_list_page.dart';
 import 'package:flutter_study_app/project/pages/profile_page.dart';
-import 'package:flutter_study_app/project/pages/tweet_page.dart';
 import 'package:flutter_study_app/project/widget/my_drawer.dart';
 import 'package:flutter_study_app/project/widget/navigation_icon_view.dart';
 
@@ -39,8 +39,8 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
           activeIconPath: 'assets/images/ic_nav_news_active.png'),
       NavigationIconView(
           title: '博客',
-          iconPath: 'assets/images/ic_nav_tweet_normal.png',
-          activeIconPath: 'assets/images/ic_nav_tweet_active.png'),
+          iconPath: 'assets/images/ic_nav_blog_normal.png',
+          activeIconPath: 'assets/images/ic_nav_blog_active.png'),
       NavigationIconView(
           title: '发现',
           iconPath: 'assets/images/ic_nav_discover_normal.png',
@@ -53,7 +53,7 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
 
     _pages = [
       NewsListPage(),
-      TweetPage(initialIndex: this.isMyBlog ? 1 : 0),
+      BlogPage(initialIndex: this.isMyBlog ? 1 : 0),
       DiscoveryPage(),
       ProfilePage(),
     ];

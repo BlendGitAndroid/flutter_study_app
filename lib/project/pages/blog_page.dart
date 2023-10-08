@@ -10,17 +10,17 @@ import '../utils/net_utils.dart';
 import '../widget/news_list_item.dart';
 import 'log_web_page.dart';
 
-class TweetPage extends StatefulWidget {
+class BlogPage extends StatefulWidget {
   final int initialIndex;
 
-  const TweetPage({required this.initialIndex, Key? key}) : super(key: key);
+  const BlogPage({required this.initialIndex, Key? key}) : super(key: key);
 
   @override
-  _TweetPageState createState() => _TweetPageState();
+  _BlogPageState createState() => _BlogPageState();
 }
 
 // SingleTickerProviderStateMixin是Flutter中的一个mixin，它为State对象提供了一个单个TickerProvider的实现。
-class _TweetPageState extends State<TweetPage>
+class _BlogPageState extends State<BlogPage>
     with SingleTickerProviderStateMixin {
   List _tabTitles = ['最新', '我的'];
 
@@ -141,7 +141,7 @@ class _TweetPageState extends State<TweetPage>
         Expanded(
             child: TabBarView(
           controller: _tabController,
-          children: [_buildLatestTweetList(), _buildHotTweetList()],
+          children: [_buildLatestBlogList(), _buildHotBlogList()],
         ))
       ],
     );
@@ -154,7 +154,7 @@ class _TweetPageState extends State<TweetPage>
   }
 
   //最新
-  Widget _buildLatestTweetList() {
+  Widget _buildLatestBlogList() {
     if (latestBlogList == null) {
       getBlogList(isLoadMore: false);
       return new Center(
@@ -199,7 +199,7 @@ class _TweetPageState extends State<TweetPage>
     );
   }
 
-  Widget _buildHotTweetList() {
+  Widget _buildHotBlogList() {
     if (myBlogList == null) {
       getMyBlogList(isLoadMore: false);
       return Center(

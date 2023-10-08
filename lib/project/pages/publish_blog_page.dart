@@ -7,12 +7,12 @@ import 'package:http/http.dart' as http;
 import '../constants/constants.dart';
 import '../utils/data_utils.dart';
 
-class PublishTweetPage extends StatefulWidget {
+class PublishBlogPage extends StatefulWidget {
   @override
-  _PublishTweetPageState createState() => _PublishTweetPageState();
+  _PublishBlogPageState createState() => _PublishBlogPageState();
 }
 
-class _PublishTweetPageState extends State<PublishTweetPage> {
+class _PublishBlogPageState extends State<PublishBlogPage> {
   TextEditingController _controllerTitle = new TextEditingController();
   TextEditingController _controllerContent = new TextEditingController();
   bool isLoading = false;
@@ -126,7 +126,7 @@ class _PublishTweetPageState extends State<PublishTweetPage> {
                   //发布博客
                   DataUtils.getAccessToken().then((token) {
                     //网络请求，发布博客
-                    _publishTweet(context, token);
+                    _publishBlog(context, token);
                   });
                 },
                 child: Text(
@@ -145,7 +145,7 @@ class _PublishTweetPageState extends State<PublishTweetPage> {
   }
 
   //发送博客
-  void _publishTweet(BuildContext context, String? token) async {
+  void _publishBlog(BuildContext context, String? token) async {
     if (token == null) {
       _showSnackBar(context, '未登录！');
       return;

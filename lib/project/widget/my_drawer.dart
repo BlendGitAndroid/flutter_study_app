@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../pages/about_page.dart';
-import '../pages/publish_tweet_page.dart';
+import '../pages/publish_blog_page.dart';
 import '../pages/settings_page.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -39,8 +39,8 @@ class MyDrawer extends StatelessWidget {
             onTap: () {
               switch (index) {
                 case 0:
-                  //PublishTweetPage
-                  _navPush(context, PublishTweetPage());
+                  //PublishBlogPage
+                  _navPush(context, PublishBlogPage());
                   break;
                 case 1:
                   //AboutPage
