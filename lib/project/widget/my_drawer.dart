@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../pages/about_page.dart';
 import '../pages/publish_tweet_page.dart';
 import '../pages/settings_page.dart';
-import '../pages/tweet_black_house.dart';
 
 class MyDrawer extends StatelessWidget {
   final String headImgPath;
@@ -32,27 +31,22 @@ class MyDrawer extends StatelessWidget {
               fit: BoxFit.cover,
             );
           }
-          index -= 1; //-1为了ListTile
+          index -= 1; // -1为了ListTile
           return ListTile(
             leading: Icon(menuIcons[index]),
             title: Text(menuTitles[index]),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              //TODO 待实现
               switch (index) {
                 case 0:
                   //PublishTweetPage
                   _navPush(context, PublishTweetPage());
                   break;
                 case 1:
-                  //TweetBlackHousePage
-                  _navPush(context, TweetBlackHousePage());
-                  break;
-                case 2:
                   //AboutPage
                   _navPush(context, AboutPage());
                   break;
-                case 3:
+                case 2:
                   //SettingsPage
                   _navPush(context, SettingsPage());
                   break;

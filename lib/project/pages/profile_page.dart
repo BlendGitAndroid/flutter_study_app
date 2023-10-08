@@ -96,9 +96,11 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return ListView.separated(
         itemBuilder: (context, index) {
+          // 头部
           if (index == 0) {
             return _buildHeader();
           }
+          // 减去头部,所以要减去1
           index -= 1;
           return ListTile(
             leading: Icon(menuIcons[index]),
@@ -111,6 +113,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     case 0:
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => MyMessagePage()));
+                      break;
+                    case 2:
+                      eventBus.fire(GotoBlogEvent());
                       break;
                   }
                 } else {
@@ -151,11 +156,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 60.0,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
+                        // 通过装饰器,将这里设置成圆形
                         border: Border.all(
                           color: Color(0xffffffff),
                           width: 2.0,
                         ),
                         image: DecorationImage(
+                          // 从网络获取图片
                           image: NetworkImage(userAvatar!),
                           fit: BoxFit.cover,
                         ),

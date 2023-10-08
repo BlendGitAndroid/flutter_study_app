@@ -6,6 +6,7 @@ import 'package:flutter_study_app/project/pages/tweet_page.dart';
 import 'package:flutter_study_app/project/widget/my_drawer.dart';
 import 'package:flutter_study_app/project/widget/navigation_icon_view.dart';
 
+import 'common/event_bus.dart';
 import 'constants/constants.dart';
 
 class ProjectHomePage extends StatefulWidget {
@@ -16,12 +17,17 @@ class ProjectHomePage extends StatefulWidget {
 }
 
 class _ProjectHomePageState extends State<ProjectHomePage> {
-  final _appBarTitle = ['资讯', '动弹', '发现', '我的'];
+  final _appBarTitle = ['资讯', '博客', '发现', '我的'];
+
+  // 初始化一个可空的数组
   List<NavigationIconView>? _navigationIconViews;
   var _currentIndex = 0;
 
   List<Widget>? _pages;
   PageController? _pageController;
+
+  // todo: 用于判断是否跳转到博客页面
+  bool isMyBlog = false;
 
   @override
   void initState() {
@@ -32,7 +38,7 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
           iconPath: 'assets/images/ic_nav_news_normal.png',
           activeIconPath: 'assets/images/ic_nav_news_active.png'),
       NavigationIconView(
-          title: '动弹',
+          title: '博客',
           iconPath: 'assets/images/ic_nav_tweet_normal.png',
           activeIconPath: 'assets/images/ic_nav_tweet_active.png'),
       NavigationIconView(
@@ -47,12 +53,24 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
 
     _pages = [
       NewsListPage(),
-      TweetPage(),
+      TweetPage(initialIndex: this.isMyBlog ? 1 : 0),
       DiscoveryPage(),
       ProfilePage(),
     ];
 
     _pageController = PageController(initialPage: _currentIndex);
+
+    // 监听跳转博客事件
+    eventBus.on<GotoBlogEvent>().listen((event) {
+      if (!mounted) return;
+      setState(() {
+        this.isMyBlog = true;
+        this._currentIndex = 1;
+        // 用于在 `PageView` 中进行页面切换的动画效果
+        _pageController?.animateToPage(1,
+            duration: Duration(microseconds: 1), curve: Curves.ease);
+      });
+    });
   }
 
   @override
@@ -74,28 +92,41 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
         },
         controller: _pageController,
         itemCount: _pages?.length,
+        // 页面切换时的回调
         onPageChanged: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
       ),
+      // 底部导航栏组件
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
+        // `map` 方法是 `Iterable` 类的一个成员函数，用于将一个集合（如 `List` 或 `Set`）中
+        // 的每个元素都映射成另一个值，并返回一个新的集合。
+        // `map` 方法的语法如下：
+        // Iterable<T> map<T>(T f(E e))
+        // 其中，参数 `f` 是一个函数，它接受集合中的每个元素 `e`，并返回一个新的值。`map` 方法会
+        // 遍历集合中的每个元素，将每个元素传递给函数 `f`，并将返回的值添加到一个新的集合中。最后返回这个新的集合。
         items: _navigationIconViews!.map((view) => view.item).toList(),
         type: BottomNavigationBarType.fixed,
+        // 点击事件
         onTap: (index) {
+          this.isMyBlog = false;
           setState(() {
             _currentIndex = index;
           });
+          // 用于在 `PageView` 中进行页面切换的动画效果
           _pageController?.animateToPage(index,
               duration: Duration(microseconds: 1), curve: Curves.ease);
         },
       ),
+      // 抽屉组件
       drawer: MyDrawer(
         headImgPath: 'assets/images/ic_cover_img.jpg',
-        menuIcons: [Icons.send, Icons.home, Icons.error, Icons.settings],
-        menuTitles: ['发布动弹', '动弹小黑屋', '关于', '设置'], key: ObjectKey("MyDrawer"),
+        menuIcons: [Icons.send, Icons.error, Icons.settings],
+        menuTitles: ['写博客', '关于', '设置'],
+        key: ObjectKey("MyDrawer"),
       ),
     );
   }

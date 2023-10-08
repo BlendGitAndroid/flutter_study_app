@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NavigationIconView {
-  //item
+  //item，用于在底部导航栏中显示的每个项目的组件
   final BottomNavigationBarItem item;
 
   //title

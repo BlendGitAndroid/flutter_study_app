@@ -13,6 +13,8 @@ class ShakePage extends StatefulWidget {
 class _ShakePageState extends State<ShakePage> {
   bool isShake = false;
   int _currentIndex = 0;
+
+  // 流对象,这里使用异步生成器
   StreamSubscription? _streamSubscription;
   static const int SHAKE_TIMEOUT = 500;
   static const double SHAKE_THRESHOLD = 3.25;
@@ -21,6 +23,7 @@ class _ShakePageState extends State<ShakePage> {
   @override
   void initState() {
     super.initState();
+    // 监听加速度传感器,通过异步生成器返回Stream对象
     _streamSubscription =
         accelerometerEvents.listen((AccelerometerEvent event) {
       var now = DateTime.now().millisecondsSinceEpoch;
@@ -67,7 +70,11 @@ class _ShakePageState extends State<ShakePage> {
             SizedBox(
               height: 10.0,
             ),
-            Text(isShake ? '活动已结束！' : '摇一摇获取礼品'),
+            Text(isShake
+                ? '活动已结束！'
+                : _currentIndex == 0
+                    ? '摇一摇抢礼品'
+                    : '摇一摇获取资讯'),
           ],
         ),
       ),

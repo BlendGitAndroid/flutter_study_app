@@ -7,3 +7,6 @@ class LoginEvent {}
 
 //登出通知
 class LogoutEvent {}
+
+// 跳转到博客详情通知
+class GotoBlogEvent{}

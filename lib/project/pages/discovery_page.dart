@@ -15,23 +15,23 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
   List<Map<String, IconData>> blocks = [
     {
       '开源众包': Icons.pageview,
-      '开源软件': Icons.speaker_notes_off,
       '码云推荐': Icons.screen_share,
-      '代码骗贷': Icons.assignment,
+      '线下活动': Icons.local_activity,
+      '软件分类': Icons.class_sharp,
     },
     {
       '扫一扫': Icons.camera_alt,
-      '摇一摇': Icons.camera,
+      '摇一摇': Icons.handshake,
     },
     {
-      '码云封面人物': Icons.person,
-      '线下活动': Icons.android,
+      '划水排行榜': Icons.person,
+      '精选开源软件': Icons.android,
     }
   ];
 
-  Future<void> _scan() async {
+  _scan() {
     try {
-      await BarcodeScanner.scan().then(
+      BarcodeScanner.scan().then(
           (value) => print("Discovery BarcodeScanner: " + value.rawContent));
     } on PlatformException catch (e) {
       print(e.message);
@@ -83,11 +83,13 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                 ),
               ),
             ),
-            //ListView嵌套ListView
+            // ListView嵌套ListView，使用的是分隔器构建器（separatorBuilder）来生成一个带有分隔符的列表
             child: ListView.separated(
-                //底层的ListView不滑动，滑动冲突
+                // 底层的ListView不滑动，滑动冲突
                 physics: NeverScrollableScrollPhysics(),
+                // 当shrinkWrap设置为true时，列表或网格的尺寸将根据其内容来收缩
                 shrinkWrap: true,
+                itemCount: blocks[blockIndex].length,
                 itemBuilder: (context, mapIndex) {
                   //水波纹组件
                   return InkWell(
@@ -97,7 +99,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                     },
                     child: Container(
                       height: 60.0,
-                      //每一个item的效果
+                      // 每一个item的效果,使用默认的ListTile
                       child: ListTile(
                         leading:
                             Icon(blocks[blockIndex].values.elementAt(mapIndex)),
@@ -114,8 +116,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                     height: 2.0,
                     color: AppColors.APPBAR,
                   );
-                },
-                itemCount: blocks[blockIndex].length),
+                }),
           );
         });
   }

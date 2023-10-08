@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 
 import '../constants/constants.dart';
 import '../utils/data_utils.dart';
@@ -15,9 +13,8 @@ class PublishTweetPage extends StatefulWidget {
 }
 
 class _PublishTweetPageState extends State<PublishTweetPage> {
-  TextEditingController _controller = new TextEditingController();
-  List<File> fileList = [];
-  Future<XFile?>? _imageFile;
+  TextEditingController _controllerTitle = new TextEditingController();
+  TextEditingController _controllerContent = new TextEditingController();
   bool isLoading = false;
 
   //输入框
@@ -25,13 +22,41 @@ class _PublishTweetPageState extends State<PublishTweetPage> {
     List<Widget> _body = [
       ListView(
         children: <Widget>[
-          //动弹内容输入框
           Padding(
-            padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Text("文章标题",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+          // 博客标题输入框
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
             child: TextField(
-              controller: _controller,
+              controller: _controllerTitle,
               decoration: InputDecoration(
-                  hintText: '今天想动弹什么?',
+                  hintText: '请输入标题',
+                  hintStyle: TextStyle(
+                    color: Color(0xaaaaaaaa),
+                  ),
+                  //四周的边框及圆角
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      const Radius.circular(10.0),
+                    ),
+                  )),
+              //最多字数显示，字数控制
+              maxLength: 10,
+            ),
+          ),
+          Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+              child: Text("文章内容",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+          //博客内容输入框
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+            child: TextField(
+              controller: _controllerContent,
+              decoration: InputDecoration(
+                  hintText: '今天想写点什么呢?',
                   hintStyle: TextStyle(
                     color: Color(0xaaaaaaaa),
                   ),
@@ -44,50 +69,6 @@ class _PublishTweetPageState extends State<PublishTweetPage> {
               //最多字数显示，字数控制
               maxLength: 150,
               maxLines: 6,
-            ),
-          ),
-          //图片显示 ListView嵌套GradView
-          GridView.count(
-            shrinkWrap: true,
-            //每一行显示4个
-            crossAxisCount: 4,
-            children: List.generate(
-              //默认的+号icon
-              fileList.length + 1,
-              (index) {
-                //默认第一个icon
-                if (index == fileList.length) {
-                  return Builder(
-                    builder: (context) {
-                      return GestureDetector(
-                        onTap: () {
-                          //选择图片
-                          _pickImage(context);
-                        },
-                        child: Image.asset(
-                          'assets/images/ic_add_pics.png',
-                        ),
-                      );
-                    },
-                  );
-                }
-                return GestureDetector(
-                  //点击事件
-                  onTap: () {
-                    //取消图片
-                    setState(() {
-                      fileList.removeAt(index);
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.file(
-                      fileList[index],
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                );
-              },
             ),
           ),
         ],
@@ -112,7 +93,7 @@ class _PublishTweetPageState extends State<PublishTweetPage> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  Text('努力动弹中...', style: TextStyle(color: Colors.white))
+                  Text('努力发布中...', style: TextStyle(color: Colors.white))
                 ],
               ),
             ),
@@ -133,7 +114,7 @@ class _PublishTweetPageState extends State<PublishTweetPage> {
       appBar: AppBar(
         elevation: 0.0,
         title: Text(
-          '弹一弹',
+          '写博客',
           style: TextStyle(color: Colors.white),
         ),
         iconTheme: IconThemeData(color: Colors.white),
@@ -142,14 +123,14 @@ class _PublishTweetPageState extends State<PublishTweetPage> {
             builder: (context) {
               return TextButton(
                 onPressed: () {
-                  //发布动弹
+                  //发布博客
                   DataUtils.getAccessToken().then((token) {
-                    //网络请求，发布动弹
+                    //网络请求，发布博客
                     _publishTweet(context, token);
                   });
                 },
                 child: Text(
-                  '发送',
+                  '发布文章',
                   style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
               );
@@ -157,59 +138,40 @@ class _PublishTweetPageState extends State<PublishTweetPage> {
           )
         ],
       ),
-      //类似于网络请求的Builder
-      body: FutureBuilder(
-        future: _imageFile,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.data != null &&
-              _imageFile != null) {
-            if (snapshot.data is XFile) {
-              fileList.add(File((snapshot.data as XFile).path));
-            } else {
-              _showSnackBar(context, "图片选择失败");
-            }
-            _imageFile = null;
-          }
-          return _bodyWidget();
-        },
+      body: Container(
+        child: _bodyWidget(),
       ),
     );
   }
 
-  //发送动弹
+  //发送博客
   void _publishTweet(BuildContext context, String? token) async {
     if (token == null) {
       _showSnackBar(context, '未登录！');
       return;
     }
-    //拿到输入框的文本信息
-    String tweetContent = _controller.text;
-    if (tweetContent.isEmpty) {
-      //未输入动弹内容
-      _showSnackBar(context, '请输入动弹内容！');
+    //拿到内容输入框的文本信息
+    String content = _controllerContent.text;
+    String title = _controllerTitle.text;
+    if (title.isEmpty) {
+      //未输入博客标题
+      _showSnackBar(context, '请输入博客标题！');
+      return;
+    }
+    if (content.isEmpty) {
+      //未输入博客内容
+      _showSnackBar(context, '请输入博客内容！');
       return;
     }
     Map<String, String> params = new Map();
-    params['msg'] = tweetContent;
     params['access_token'] = token;
-    print('动弹内容：$tweetContent');
+    params['title'] = title;
+    params['classification'] = "1";
+    params['content'] = content;
 
     var multipartRequest =
-        http.MultipartRequest('POST', Uri.parse(AppUrls.TWEET_PUB));
+        http.MultipartRequest('POST', Uri.parse(AppUrls.BLOG_PUB));
     multipartRequest.fields.addAll(params);
-    if (fileList.length > 0) {
-      for (File file in fileList) {
-        var stream = new http.ByteStream(file.openRead());
-        var length = await file.length();
-        print("图片地址：" + '${file.path}');
-        var fileName = file.path.substring(file.path.lastIndexOf('/') + 1);
-        // MultipartFile(this.field, Stream<List<int>> stream, this.length,
-        //{this.filename, MediaType contentType})
-        multipartRequest.files
-            .add(http.MultipartFile('img', stream, length, filename: fileName));
-      }
-    }
     setState(() {
       isLoading = true;
     });
@@ -225,8 +187,8 @@ class _PublishTweetPageState extends State<PublishTweetPage> {
       if (mounted) {
         setState(() {
           if (errorCode != null && errorCode == '200') {
-            fileList.clear();
-            _controller.clear();
+            _controllerContent.clear();
+            _controllerTitle.clear();
             _showSnackBar(context, '发布成功!');
           } else {
             _showSnackBar(context, '发布失败: ${decode['error_description']}');
@@ -241,69 +203,5 @@ class _PublishTweetPageState extends State<PublishTweetPage> {
       content: new Text(message),
       duration: Duration(milliseconds: 500),
     ));
-  }
-
-  //选择添加图片
-  void _pickImage(BuildContext context) {
-    // 如果已添加了9张图片，则提示不允许添加更多
-    num size = fileList.length;
-    if (size >= 9) {
-      _showSnackBar(context, "最多只能添加9张图片！");
-      return;
-    }
-    //底部弹出框（相机拍照和选择照片）
-    showModalBottomSheet<void>(
-        context: context,
-        builder: (context) {
-          return new Container(
-              height: 121.0,
-              child: new Column(
-                children: <Widget>[
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      if (mounted) {
-                        setState(() {
-                          _imageFile = ImagePicker()
-                              .pickImage(source: ImageSource.camera);
-                        });
-                      }
-                    },
-                    child: Container(
-                      height: 60.0,
-                      child: Center(
-                        child: Text(
-                          '相机拍照',
-                          style: TextStyle(fontSize: 20.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  new Divider(
-                    height: 1.0,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      if (mounted) {
-                        setState(() {
-                          _imageFile = ImagePicker()
-                              .pickImage(source: ImageSource.gallery);
-                        });
-                      }
-                    },
-                    child: Container(
-                      height: 60.0,
-                      child: Center(
-                        child: Text(
-                          '图库选择照片',
-                          style: TextStyle(fontSize: 20.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ));
-        });
   }
 }
