@@ -12,6 +12,9 @@ class _AboutPageState extends State<AboutPage> {
       appBar: AppBar(
         title: Text('关于'),
       ),
+      body: Center(
+        child: Text('BlendAndroid的Flutter学习项目', style: TextStyle(fontSize: 20.0),),
+      ),
     );
   }
 }

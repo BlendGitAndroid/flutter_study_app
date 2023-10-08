@@ -123,7 +123,7 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
       ),
       // 抽屉组件
       drawer: MyDrawer(
-        headImgPath: 'assets/images/ic_cover_img.jpg',
+        headImgPath: 'assets/images/ic_cover_img.png',
         menuIcons: [Icons.send, Icons.error, Icons.settings],
         menuTitles: ['写博客', '关于', '设置'],
         key: ObjectKey("MyDrawer"),
