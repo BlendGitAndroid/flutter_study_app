@@ -26,8 +26,9 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
   List<Widget>? _pages;
   PageController? _pageController;
 
-  // todo: 用于判断是否跳转到博客页面
   bool isMyBlog = false;
+
+  BlogPage blogPage = BlogPage();
 
   @override
   void initState() {
@@ -53,7 +54,7 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
 
     _pages = [
       NewsListPage(),
-      BlogPage(initialIndex: this.isMyBlog ? 1 : 0),
+      blogPage,
       DiscoveryPage(),
       ProfilePage(),
     ];
@@ -63,8 +64,8 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
     // 监听跳转博客事件
     eventBus.on<GotoBlogEvent>().listen((event) {
       if (!mounted) return;
+      blogPage.isMyBlog = true;
       setState(() {
-        this.isMyBlog = true;
         this._currentIndex = 1;
         // 用于在 `PageView` 中进行页面切换的动画效果
         _pageController?.animateToPage(1,
@@ -112,7 +113,7 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
         type: BottomNavigationBarType.fixed,
         // 点击事件
         onTap: (index) {
-          this.isMyBlog = false;
+          blogPage.isMyBlog = false;
           setState(() {
             _currentIndex = index;
           });

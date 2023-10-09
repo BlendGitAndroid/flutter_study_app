@@ -11,9 +11,9 @@ import '../widget/news_list_item.dart';
 import 'log_web_page.dart';
 
 class BlogPage extends StatefulWidget {
-  final int initialIndex;
+  bool isMyBlog = false;
 
-  const BlogPage({required this.initialIndex, Key? key}) : super(key: key);
+  BlogPage({Key? key}) : super(key: key);
 
   @override
   _BlogPageState createState() => _BlogPageState();
@@ -47,9 +47,8 @@ class _BlogPageState extends State<BlogPage>
   void initState() {
     super.initState();
     // 添加了一个选项卡切换的监听器
-    print("widget.initialIndex: ${widget.initialIndex}");
     _tabController = TabController(
-        initialIndex: widget.initialIndex,
+        initialIndex: widget.isMyBlog ? 1 : 0,
         length: _tabTitles.length,
         vsync: this);
     _controller.addListener(() {
