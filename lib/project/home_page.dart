@@ -3,6 +3,7 @@ import 'package:flutter_study_app/project/pages/blog_page.dart';
 import 'package:flutter_study_app/project/pages/discovery_page.dart';
 import 'package:flutter_study_app/project/pages/news_list_page.dart';
 import 'package:flutter_study_app/project/pages/profile_page.dart';
+import 'package:flutter_study_app/project/widget/keep_alive_wrapper.dart';
 import 'package:flutter_study_app/project/widget/my_drawer.dart';
 import 'package:flutter_study_app/project/widget/navigation_icon_view.dart';
 
@@ -89,7 +90,10 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
         //禁止滑动
         // physics: NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          return _pages![index];
+          // 为 true 后会缓存所有的列表项，列表项将不会销毁。
+          // 为 false 时，列表项滑出预加载区域后将会别销毁。
+          // 使用时一定要注意是否必要，因为对所有列表项都缓存的会导致更多的内存消耗
+          return KeepAliveWrapper(child: _pages![index]);
         },
         controller: _pageController,
         itemCount: _pages?.length,
@@ -99,6 +103,7 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
             _currentIndex = index;
           });
         },
+        // allowImplicitScrolling: true, // 缓存前后各一页,但是这种效果不好,采用AutomaticKeepAlive
       ),
       // 底部导航栏组件
       bottomNavigationBar: BottomNavigationBar(

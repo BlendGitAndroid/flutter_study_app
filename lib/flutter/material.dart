@@ -8,9 +8,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // 是一个`String`类型的属性，用于设置整个应用程序的标题。
       title: 'MaterialApp',
-      // 初始化路由,是一个hashmap,{}里面的key是路由名称，value是一个函数，返回一个Widget
+      // 初始化路由,是一个hashmap,表示的路由表,{}里面的key是路由名称，value是一个函数，返回一个Widget
       routes: {'/other': (BuildContext context) => OtherPage()},
 //      initialRoute: '/other',
+      // 初始界面
       home: HomePage(),
     );
   }

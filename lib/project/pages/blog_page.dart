@@ -20,6 +20,8 @@ class BlogPage extends StatefulWidget {
 }
 
 // SingleTickerProviderStateMixin是Flutter中的一个mixin，它为State对象提供了一个单个TickerProvider的实现。
+// 作用就是当前页的动画还在播放的时候，用户导航到另外一个页面，当前页的动画就没有必要再播放了，反之在页面切换回来的时
+// 候动画有可能还要继续播放，它就是来实现这个控制的。
 class _BlogPageState extends State<BlogPage>
     with SingleTickerProviderStateMixin {
   List _tabTitles = ['最新', '我的'];
@@ -138,7 +140,7 @@ class _BlogPageState extends State<BlogPage>
         ),
         // Expanded: 可以用于将子组件扩展以填充可用空间，以及根据可用空间的大小调整子组件的尺寸
         Expanded(
-            child: TabBarView(
+            child: TabBarView(  // TabBarView 封装了 PageView
           controller: _tabController,
           children: [_buildLatestBlogList(), _buildHotBlogList()],
         ))
