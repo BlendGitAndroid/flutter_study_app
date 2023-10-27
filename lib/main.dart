@@ -85,6 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
   // 然后在之后的build() 中InheritedWidget发生了变化，那么此时InheritedWidget的子widget的
   // didChangeDependencies()回调都会被调用。典型的场景是当系统语言Locale或应用主题改变时，
   // Flutter framework会通知widget调用此回调。
+  // `didChangeDependencies`方法通常在以下情况下被调用：
+  // 1. 当Widget首次构建时，Flutter会调用`didChangeDependencies`。
+  // 2. 当Widget所依赖的InheritedWidget发生变化时，Flutter会再次调用`didChangeDependencies`。
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

@@ -8,6 +8,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // 是一个`String`类型的属性，用于设置整个应用程序的标题。
       title: 'MaterialApp',
+      // 命名路由，注册路由表
       // 初始化路由,是一个hashmap,表示的路由表,{}里面的key是路由名称，value是一个函数，返回一个Widget
       routes: {'/other': (BuildContext context) => OtherPage()},
 //      initialRoute: '/other',
@@ -60,7 +61,7 @@ class _HomePageState extends State<HomePage> {
       // FloatingActionButton是一个悬浮按钮，点击后会执行onPressed方法中的代码
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // 路由跳转
+          // 通过路由名打开新路由页,路由跳转
           Navigator.pushNamed(context, '/other');
         },
         tooltip: '路由跳转',
