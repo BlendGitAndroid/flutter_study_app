@@ -111,6 +111,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 if (isLogin) {
                   switch (index) {
                     case 0:
+                      print("throw print");
+                      throw("throw test");
                       // MaterialPageRoute继承自PageRoute类，PageRoute类是一个抽象类，
                       // 表示占有整个屏幕空间的一个模态路由页面，它还定义了路由构建及切换时过渡动画的相关接口及属性。
                       Navigator.of(context).push(MaterialPageRoute(
