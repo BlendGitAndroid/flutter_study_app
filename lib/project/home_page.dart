@@ -3,6 +3,7 @@ import 'package:flutter_study_app/project/pages/blog_page.dart';
 import 'package:flutter_study_app/project/pages/discovery_page.dart';
 import 'package:flutter_study_app/project/pages/news_list_page.dart';
 import 'package:flutter_study_app/project/pages/profile_page.dart';
+import 'package:flutter_study_app/project/utils/report.dart';
 import 'package:flutter_study_app/project/widget/keep_alive_wrapper.dart';
 import 'package:flutter_study_app/project/widget/my_drawer.dart';
 import 'package:flutter_study_app/project/widget/navigation_icon_view.dart';
@@ -34,6 +35,10 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
   @override
   void initState() {
     super.initState();
+
+    // 开始计算页面的fps
+    Report.startRecord('${this.runtimeType}');
+
     _navigationIconViews = [
       NavigationIconView(
           title: '资讯',
@@ -77,6 +82,9 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => Report.endRecord('${this.runtimeType}'));
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,

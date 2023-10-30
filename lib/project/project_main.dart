@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_study_app/project/utils/report.dart';
 
 import 'constants/constants.dart';
 import 'home_page.dart';
@@ -26,6 +27,8 @@ void main() {
   //   ),
   // );
 
+  Report.start();
+
   // 其他异常捕获
   runZonedGuarded(() => runApp(MyApp()), (error, stack) {
     print("runZonedGuarded error: $error");
@@ -36,6 +39,7 @@ void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
     print("FlutterError.onError: $details");
   };
+
 }
 
 class MyApp extends StatelessWidget {
