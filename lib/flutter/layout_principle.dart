@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(ContainerApp());
 
-/// todo: 布局约束原理,还是得多看看 https://juejin.cn/post/7183549888406224955
+/// 向下传递约束,向上传递大小
 class ContainerApp extends StatelessWidget {
   const ContainerApp({Key? key}) : super(key: key);
 
