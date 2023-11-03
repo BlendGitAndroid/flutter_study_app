@@ -35,7 +35,6 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
   @override
   void initState() {
     super.initState();
-
     // 开始计算页面的fps
     Report.startRecord('${this.runtimeType}');
 
@@ -66,6 +65,7 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
     ];
 
     _pageController = PageController(initialPage: _currentIndex);
+    blogPage.pageController = _pageController;
 
     // 监听跳转博客事件
     eventBus.on<GotoBlogEvent>().listen((event) {
@@ -82,6 +82,7 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // 单次 Frame 绘制回调，只会回调一次
     WidgetsBinding.instance
         .addPostFrameCallback((_) => Report.endRecord('${this.runtimeType}'));
 

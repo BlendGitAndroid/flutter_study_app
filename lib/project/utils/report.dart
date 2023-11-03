@@ -20,10 +20,12 @@ class Report {
   /// 启动监听数据
   static void start() async {
     deviceInfo = await IsolateHandle.getDeviceInfo();
+    // 获取每一帧耗时，这段代码主要是在 Flutter 绘制完成每一帧后都会进行回调处理，通过回调的方式可以采集到每一帧的耗时信息
     SchedulerBinding.instance.addTimingsCallback(_onReportTimings);
   }
 
   /// 数据处理
+  /// FrameTiming用于表示每一帧的时间信息。它包含了一些与帧率和性能相关的属性
   static void _onReportTimings(List<FrameTiming> timings) {
     for (FrameTiming timing in timings) {
       frames.addFirst(timing);
