@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../common/event_bus.dart';
@@ -12,6 +13,7 @@ import 'log_web_page.dart';
 
 class BlogPage extends StatefulWidget {
   bool isMyBlog = false;
+  PageController? pageController;
 
   BlogPage({Key? key}) : super(key: key);
 
@@ -44,6 +46,9 @@ class _BlogPageState extends State<BlogPage>
 
   // 是否登录
   bool isLogin = false;
+
+  Drag? drag;
+  DragStartDetails? dragStartDetails;
 
   @override
   void initState() {
@@ -140,10 +145,35 @@ class _BlogPageState extends State<BlogPage>
         ),
         // Expanded: 可以用于将子组件扩展以填充可用空间，以及根据可用空间的大小调整子组件的尺寸
         Expanded(
-            child: TabBarView(  // TabBarView 封装了 PageView
-          controller: _tabController,
-          children: [_buildLatestBlogList(), _buildHotBlogList()],
-        ))
+            // 解决滑动冲突，Flutter在滑动中每次都会发起ScrollNotification相关通知，这是我们处理滑动冲突的一个思路
+            child: NotificationListener(
+                onNotification: (notification) {
+                  if (notification is ScrollStartNotification) {
+                    //滑动起始的通知先存起来
+                    dragStartDetails = notification.dragDetails;
+                  }
+                  // 当滑动到TabBarView的最后一页（无论是左还是右的时候）系统会发出OverscrollNotification的通知
+                  if (notification is OverscrollNotification) {
+                    // 当发生OverScroll的时候，生成外部滑动的drag对象
+                    // ScrollPosition生成一个Drag对象，这个对象发起了ScrollStartNotification,开发者可以通过监
+                    // 听这个这个通知，进行一些自定义的手势处理，
+                    drag = widget.pageController?.position
+                        .drag(dragStartDetails!, () {});
+                    //使用外部滑动的drag对象进行滑动
+                    drag?.update(notification.dragDetails!);
+                  }
+                  if (notification is ScrollEndNotification) {
+                    //滑动结束后取消
+                    drag?.cancel();
+                    drag = null;
+                  }
+                  return true;
+                },
+                child: TabBarView(
+                  // TabBarView 封装了 PageView
+                  controller: _tabController,
+                  children: [_buildLatestBlogList(), _buildHotBlogList()],
+                )))
       ],
     );
   }
