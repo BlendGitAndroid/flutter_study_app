@@ -8,9 +8,11 @@ class Welcome extends StatelessWidget {
   /// 有状态类返回组件信息
   @override
   Widget build(BuildContext context) {
-    final _name = Provider.of<NameModel>(context);
+
+    // 通过 Provider.of(context) 方式，获得根节点 NameModel 的句柄，然后通过 NameModel 的 value 获得状态 name 的值
+    final _nameModule = Provider.of<NameModel>(context);
 
     print('welcome build');
-    return Text('欢迎 ${_name.value}');
+    return Text('欢迎 ${_nameModule.value}');
   }
 }

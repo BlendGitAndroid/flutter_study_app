@@ -8,6 +8,8 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('welcome build');
+
+    // 通过context.dependOnInheritedWidgetOfExactType进行注册,用于从父组件获取共享数据
     final name = (context.dependOnInheritedWidgetOfExactType<NameInheritedWidget>()
             as NameInheritedWidget)
         .name;

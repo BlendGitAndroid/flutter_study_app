@@ -15,6 +15,7 @@ class NameModel with ChangeNotifier {
     List<String> nameList = ['flutter one', 'flutter two', 'flutter three'];
     int pos = Random().nextInt(3);
 
+    // 判断当前name是否和随机选取的name相同，不同则修改
     if (_name != nameList[pos]) {
       _name = nameList[pos];
       notifyListeners();

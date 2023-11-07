@@ -16,6 +16,7 @@ class NameInheritedWidget extends InheritedWidget {
     required this.onNameChange,
   }) : super(key: key, child: child);
 
+  // 该回调决定当data发生变化时，是否通知子树中依赖data的Widget重新build
   @override
   bool updateShouldNotify(NameInheritedWidget old) {
     print(name != old.name);
