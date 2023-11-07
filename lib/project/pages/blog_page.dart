@@ -146,6 +146,7 @@ class _BlogPageState extends State<BlogPage>
         // Expanded: 可以用于将子组件扩展以填充可用空间，以及根据可用空间的大小调整子组件的尺寸
         Expanded(
             // 解决滑动冲突，Flutter在滑动中每次都会发起ScrollNotification相关通知，这是我们处理滑动冲突的一个思路
+            // 使用NotificationListener机制来监听通知
             child: NotificationListener(
                 onNotification: (notification) {
                   if (notification is ScrollStartNotification) {
