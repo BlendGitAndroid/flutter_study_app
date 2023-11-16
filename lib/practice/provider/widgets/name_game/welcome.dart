@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_study_app/practice/provider/widgets/name_game/welcome_sub.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/name_model.dart';
@@ -13,6 +14,12 @@ class Welcome extends StatelessWidget {
     final _nameModule = Provider.of<NameModel>(context);
 
     print('welcome build');
-    return Text('欢迎 ${_nameModule.value}');
+    return Column(
+      children: [
+        Text('欢迎 ${_nameModule.value}'),
+        WelcomeSub(),
+      ],
+      mainAxisAlignment: MainAxisAlignment.center,
+    );
   }
 }
