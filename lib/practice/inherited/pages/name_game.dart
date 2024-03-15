@@ -59,6 +59,8 @@ class NameGameState extends State<NameGame> {
     return Column(
       children: <Widget>[
         // 将被共享的数据,包括在NameInheritedWidget中
+        // InheritedWidget是 Flutter 中非常重要的一个功能型组件，
+        // 它提供了一种在 widget 树中从上到下共享数据的方式，比如我们在应用的根 widget 中通过InheritedWidget共享了一个数据，
         NameInheritedWidget(
             child: child!, onNameChange: changeName, name: name!),
       ],

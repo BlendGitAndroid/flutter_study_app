@@ -6,6 +6,8 @@ import 'package:flutter_study_app/project/utils/report.dart';
 import 'constants/constants.dart';
 import 'home_page.dart';
 
+// 在事件循环中，当某个任务发生异常并没有被捕获时，程序并不会退出，而直接导致的结果
+// 是当前任务的后续代码就不会被执行了，也就是说一个任务中的异常是不会影响其他任务执行的。
 // 应用发生异常,并不会崩溃,因为是单线程和事件驱动机制,只会造成这个事件不执行
 // void main() => runApp(MyApp());
 

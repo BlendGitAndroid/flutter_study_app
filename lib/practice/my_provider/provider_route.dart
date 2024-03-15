@@ -15,6 +15,8 @@ class ProviderRoute extends StatefulWidget {
 }
 
 class _ProviderRouteState extends State<ProviderRoute> {
+
+
   @override
   void didUpdateWidget(ProviderRoute oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -36,6 +38,13 @@ class _ProviderRouteState extends State<ProviderRoute> {
                 builder: (BuildContext context, CartModel? cart) =>
                     Text("总价: ${cart!.totalPrice}"),
               ),
+              // 通过Builder来构建ElevatedButton,这样可以获取到ChangeNotifierProvider的context
+              // 在Flutter中，`Builder`是一个用于构建小部件树的小部件。它通常用于在某个上下文中构建小部件。
+              // `Builder`被用于构建一个`ElevatedButton`小部件。
+              // 使用`Builder`的主要原因是为了在当前上下文中创建新的上下文，通常是在需要访问父级上下文但又不想
+              // 直接传递上下文参数的情况下。在上面的示例中，`ElevatedButton`可能需要访问父级上下文中的某些信息，
+              // 但是又不希望直接传递`context`参数。因此，通过使用`Builder`，可以在`builder`函数中创建一个
+              // 新的上下文，并在其中构建`ElevatedButton`。
               Builder(builder: (context) {
                 print("ElevatedButton build");
                 return ElevatedButton(
@@ -43,7 +52,7 @@ class _ProviderRouteState extends State<ProviderRoute> {
                   onPressed: () {
                     var cart = ChangeNotifierProvider.of<CartModel>(
                       context,
-                      listen: false,
+                      listen: false,  // 打破ElevatedButton和InheritedWidget的依赖关系
                     );
                     cart!.add(Item(20.0, 1));
                   },

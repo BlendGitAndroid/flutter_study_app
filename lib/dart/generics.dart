@@ -13,7 +13,7 @@ main() {
   map[3] = 'cccc';
   print(map);
 
-  //泛型函数
+  //泛型函数,<K, V>就是定义泛型
   K addCache<K, V>(K key, V value) {
     K temp = key;
     print('$key: $value');

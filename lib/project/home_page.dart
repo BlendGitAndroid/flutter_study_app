@@ -82,10 +82,32 @@ class _ProjectHomePageState extends State<ProjectHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    DateTime? _lastPressedAt; //上次点击时间
+
     // 单次 Frame 绘制回调，只会回调一次
     WidgetsBinding.instance
         .addPostFrameCallback((_) => Report.endRecord('${this.runtimeType}'));
 
+    return WillPopScope(
+      onWillPop: () async {
+        if (_lastPressedAt == null ||
+            DateTime.now().difference(_lastPressedAt!) > Duration(seconds: 1)) {
+          //两次点击间隔超过1秒则重新计时
+          _lastPressedAt = DateTime.now();
+          ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+            content: new Text("请再次点击退出"),
+            duration: Duration(milliseconds: 500),
+          ));
+          return false; // 拦截返回按钮
+        }
+        return true;
+      },
+      child: scaffoldName(),
+    );
+  }
+
+  Scaffold scaffoldName() {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 // ChangeNotifierProvider是InheritedWidget的封装
 // ChangeNotifier类,是一个发布者-订阅者模式
 class ChangeNotifierProvider<T extends ChangeNotifier> extends StatefulWidget {
+
   final Widget child;
   final T data;
 
@@ -31,6 +32,7 @@ class ChangeNotifierProvider<T extends ChangeNotifier> extends StatefulWidget {
 
 class _ChangeNotifierProviderState<T extends ChangeNotifier>
     extends State<ChangeNotifierProvider<T>> {
+
   void update() {
     //如果数据发生变化（model类调用了notifyListeners），就会调用update方法,重新构建InheritedProvider
     setState(() => {});
@@ -74,6 +76,7 @@ class _ChangeNotifierProviderState<T extends ChangeNotifier>
 
 // 一个通用的InheritedWidget，保存需要跨组件的共享数据
 class InheritedProvider<T> extends InheritedWidget {
+
   const InheritedProvider({
     Key? key,
     required this.data,

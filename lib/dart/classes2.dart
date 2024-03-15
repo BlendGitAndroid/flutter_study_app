@@ -57,7 +57,7 @@ main() {
   programmer.work();
 
   //可调用类
-  var cf = new ClassFunction();
+  var cf = ClassFunction();
   var out = cf("blend", "flutter,", "android");
   print('$out'); // blend flutter, android!
   print(cf.runtimeType); // ClassFunction

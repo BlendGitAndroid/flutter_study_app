@@ -39,6 +39,8 @@ void main() {
   //
   // //scheduleMicroTask 918346572
   // testScheduleMicroTask();
+  // different();
+
   //
   // // 需要等待多个异步任务都执行结束后才进行一些操作，答案是Future.wait，它接受一个Future数组
   // // 参数，只有数组中所有Future都执行成功后，才会触发then的成功回调，只要有一个Future执行失败，
@@ -61,8 +63,25 @@ void main() {
   //-----------------------------------------------------------------------------
 
   // 先打印"task之后打印",这句话
-  task().then((_) => print('task then'));
-  print("task之后打印");
+  // task().then((_) => print('task then'));
+  // print("task之后打印");
+}
+
+// 如果是闭包的写法,就会先执行
+void different() {
+  // 10 11 12 22
+  new Future(() => print('s10'))
+      .then((_) => new Future(() => print('s11')))
+      .then((_) => print('s12'))
+      .then((_) => print('s22'));
+
+  // 10 12 22 11
+  // new Future(() => print('s10'))
+  //     .then((_) {
+  //       new Future(() => print('s11'));
+  //     })
+  //     .then((_) => print('s12'))
+  //     .then((_) => print('s22'));
 }
 
 // then中接收异步结果并处理
@@ -127,8 +146,8 @@ getName3() {
   print('getName3');
 }
 
-//Future
 // 在future中,回调函数 `() => print("f1")` 被传递给了`Future`的构造函数，意味着当这个`Future`对象完成时，这个回调函数会被调用。
+// 7,1,6,3,5,2,4
 void testFuture() {
   Future f = new Future(() => print("f1"));
   Future f1 = new Future(() => null);
@@ -163,9 +182,10 @@ void testScheduleMicroTask() {
     scheduleMicrotask(() => print('s5'));
   }).then((_) => print('s6'));
 
+  // 看different方法
   new Future(() => print('s10'))
       .then((_) => new Future(() => print('s11')))
-      .then((_) => print('s12')); //这个是s11的then
+      .then((_) => print('s12'));
 
   new Future(() => print('s7'));
 
@@ -189,7 +209,8 @@ Future<void> task() async {
   try {
     String id = await login("alice", "******");
     String userInfo = await getUserInfo(id);
-    await saveUserInfo(userInfo);
+    await saveUserInfo(
+        userInfo); // 在异步函数中，如果没有使用`return`语句，函数内部的最后一个表达式的值将会被隐式地包装在一个`Future`中作为函数的返回值。
     //执行接下来的操作
   } catch (e) {
     //错误处理
@@ -197,6 +218,14 @@ Future<void> task() async {
   }
 }
 
+// 在Dart中，如果一个函数使用了`async`关键字进行标记，那么它可以返回一个`Future`对象，即使其
+// 实际上返回的是一个具体的值。这是因为使用`async`标记的函数会被隐式地转换为返回一个`Future`。
+// `login`函数被标记为`async`，并且它实际上返回了一个字符串："blend"。然而，由于它是一个异步函数，
+// 因此它的返回类型是`Future<String>`，表示它将来会产生一个字符串值。
+// 这种设计的好处是，它使得处理异步操作更加方便。在调用异步函数时，可以直接使用`await`关键字等
+// 待其返回的结果，而不需要手动处理`Future`对象的完成和处理回调。
+// 因此，尽管`login`函数返回的是一个具体的字符串值，但其返回类型是`Future<String>`，因为它
+// 是一个异步函数。
 Future<String> login(String userName, String pwd) async {
   //用户登录
   return "blend";
